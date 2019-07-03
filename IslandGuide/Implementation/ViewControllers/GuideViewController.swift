@@ -121,7 +121,7 @@ private extension GuideViewController {
             let section: NSCollectionLayoutSection
             switch guideSection {
             case .coolSpots:
-                section = sself.makeSpotsSectionDeclaration()
+                section = sself.makeSpotsSectionDeclaration(environment: environment)
             case .funActivities:
                 section = sself.makeActivitiesSectionDeclaration()
             case .cuteSeals:
@@ -136,7 +136,9 @@ private extension GuideViewController {
         return layout
     }
     
-    func makeSpotsSectionDeclaration() -> NSCollectionLayoutSection {
+    func makeSpotsSectionDeclaration(environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        
+        let countPerRow = environment.traitCollection.horizontalSizeClass == .regular ? 3 : 2
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -144,7 +146,7 @@ private extension GuideViewController {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                heightDimension: .absolute(100))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: countPerRow)
         
         group.interItemSpacing = NSCollectionLayoutSpacing.fixed(10)
         
